@@ -1,0 +1,617 @@
+/* ==========================================================================
+   LIQUID GLASS THEME (DARK & LIGHT MODE)
+   ========================================================================== */
+
+:root {
+    --bg-main: #060c0a;
+    --text-primary: #f1f5f9;
+    --text-muted: #94a3b8;
+    --glass-bg: rgba(12, 24, 19, 0.65);
+    --glass-border: rgba(52, 211, 153, 0.18);
+    --glass-border-glow: rgba(52, 211, 153, 0.45);
+    --glass-card-bg: rgba(18, 36, 29, 0.5);
+    --glass-input-bg: rgba(5, 14, 10, 0.65);
+    --glass-header-bg: rgba(9, 19, 15, 0.45);
+    --emerald-glow: rgba(16, 185, 129, 0.25);
+    
+    --blob-1: radial-gradient(circle, #059669 0%, #047857 60%, transparent 100%);
+    --blob-2: radial-gradient(circle, #10b981 0%, #064e3b 70%, transparent 100%);
+    --blob-3: radial-gradient(circle, #34d399 0%, #14b8a6 60%, transparent 100%);
+    --wave-bg: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+}
+
+/* ==========================================================================
+   СВЕТЛАЯ ТЕМА В СТИЛЕ СБЕРБАНКА (SBER MINT LIGHT THEME)
+   ========================================================================== */
+html.light {
+    --bg-main: #f3f6f4;
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+    --glass-bg: rgba(255, 255, 255, 0.82);
+    --glass-border: rgba(33, 160, 56, 0.2);
+    --glass-border-glow: rgba(40, 200, 83, 0.4);
+    --glass-card-bg: rgba(255, 255, 255, 0.92);
+    --glass-input-bg: #ffffff;
+    --glass-header-bg: rgba(255, 255, 255, 0.88);
+    --emerald-glow: rgba(40, 200, 83, 0.25);
+
+    --blob-1: radial-gradient(circle, rgba(40, 200, 83, 0.35) 0%, rgba(33, 160, 56, 0.12) 60%, transparent 100%);
+    --blob-2: radial-gradient(circle, rgba(33, 160, 56, 0.25) 0%, rgba(16, 185, 129, 0.1) 70%, transparent 100%);
+    --blob-3: radial-gradient(circle, rgba(210, 248, 220, 0.6) 0%, rgba(40, 200, 83, 0.18) 60%, transparent 100%);
+    --wave-bg: radial-gradient(ellipse at center, rgba(40, 200, 83, 0.12) 0%, transparent 70%);
+}
+
+/* Аватар бота в стиле Сбера */
+.bot-avatar-bg {
+    background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+    color: #022c22;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+html.light .bot-avatar-bg {
+    background: #e2f7e8;
+    color: #21a038;
+    box-shadow: 0 4px 12px rgba(33, 160, 56, 0.18);
+}
+
+/* Зеленая кнопка в стиле Сбербанка */
+html.light .glass-button-primary {
+    background: linear-gradient(135deg, #28c853 0%, #1fa843 100%);
+    color: #ffffff !important;
+    font-weight: 600;
+    border: 1px solid rgba(33, 160, 56, 0.3);
+    box-shadow: 0 4px 15px rgba(40, 200, 83, 0.3);
+}
+
+html.light .glass-button-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2ed95c 0%, #21b84a 100%);
+    box-shadow: 0 6px 20px rgba(40, 200, 83, 0.42);
+}
+
+html.light .text-emerald-400 {
+    color: #21a038 !important;
+}
+
+body.bg-liquid-theme {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.text-theme { color: var(--text-primary); }
+.text-muted { color: var(--text-muted); }
+.border-theme { border-color: var(--glass-border); }
+
+/* Ambient Background */
+.ambient-background {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.liquid-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(85px);
+    opacity: 0.65;
+    animation: floatBlob 20s infinite ease-in-out alternate;
+}
+
+.blob-1 {
+    width: 550px;
+    height: 550px;
+    background: var(--blob-1);
+    top: -100px;
+    left: -100px;
+}
+
+.blob-2 {
+    width: 600px;
+    height: 600px;
+    background: var(--blob-2);
+    bottom: -150px;
+    right: -100px;
+    animation-delay: -7s;
+}
+
+.blob-3 {
+    width: 450px;
+    height: 450px;
+    background: var(--blob-3);
+    top: 35%;
+    left: 30%;
+    opacity: 0.45;
+    animation-delay: -14s;
+}
+
+.liquid-lines-wave {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: var(--wave-bg);
+    border-radius: 40%;
+    animation: rotateWave 28s infinite linear;
+}
+
+@keyframes floatBlob {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(50px, 30px) scale(1.08); }
+    100% { transform: translate(-30px, 60px) scale(0.95); }
+}
+
+@keyframes rotateWave {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   БЕЗУПРЕЧНО ПЛАВНАЯ GRID-АНИМАЦИЯ ВЫДВИЖЕНИЯ ПАНЕЛИ И ЧАТА
+   -------------------------------------------------------------------------- */
+
+#main-container {
+    grid-template-columns: 0px 1fr;
+    gap: 0px;
+    transition: grid-template-columns 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                gap 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#main-container.sidebar-is-open {
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
+}
+
+#sidebar {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(-15px);
+    transition: opacity 0.35s ease,
+                transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.45s ease;
+    pointer-events: none;
+}
+
+#main-container.sidebar-is-open #sidebar {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+#sidebar-toggle {
+    transition: opacity 0.35s ease,
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+#sidebar-toggle.toggle-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateX(-20px) scale(0.92);
+}
+
+/* Liquid Glass Cards & Panels */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.25rem;
+    box-shadow: 
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
+        0 15px 35px rgba(0, 0, 0, 0.08);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card {
+    background: var(--glass-card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+    transition: background 0.3s ease, border-color 0.3s ease;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.glass-header, .glass-footer {
+    background: var(--glass-header-bg);
+    backdrop-filter: blur(10px);
+}
+
+/* Inputs & Buttons */
+.glass-input {
+    background: var(--glass-input-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 0.75rem;
+    color: var(--text-primary);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-input:focus {
+    border-color: var(--glass-border-glow);
+    box-shadow: 0 0 15px var(--emerald-glow);
+}
+
+.glass-button {
+    background: var(--glass-card-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.glass-button:hover {
+    border-color: rgba(40, 200, 83, 0.5);
+    box-shadow: 0 0 12px var(--emerald-glow);
+}
+
+.glass-button-primary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-weight: 600;
+    border: 1px solid rgba(110, 231, 183, 0.4);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-button-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+.glass-button-primary:disabled {
+    opacity: 0.85;
+    cursor: not-allowed;
+}
+
+.glass-button-danger {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.glass-button-danger:hover {
+    background: rgba(239, 68, 68, 0.3);
+}
+
+/* Исключение браузерного дёргания скролла */
+#chat-box {
+    overflow-anchor: none;
+}
+
+.message-appear {
+    will-change: transform, opacity;
+    animation: slideUpSoft 0.35s ease-out forwards;
+}
+
+@keyframes slideUpSoft {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.word-reveal {
+    display: inline;
+    opacity: 0;
+    animation: wordFadeIn 0.2s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+@keyframes wordFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(40, 200, 83, 0.3);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(40, 200, 83, 0.5);
+}
+
+/* Базовые стили сообщений пользователя (Dark Mode) */
+.user-msg-bubble {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+}
+
+.user-avatar-bg {
+    background: #059669;
+    color: #022c22;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Стили в светлой теме (совпадают с .glass-button-primary) */
+html.light .user-msg-bubble {
+    background: linear-gradient(135deg, #28c853 0%, #1fa843 100%);
+    border: 1px solid rgba(33, 160, 56, 0.3);
+    box-shadow: 0 4px 15px rgba(40, 200, 83, 0.3);
+    color: #ffffff;
+}
+
+html.light .user-avatar-bg {
+    background: linear-gradient(135deg, #28c853 0%, #1fa843 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(40, 200, 83, 0.25);
+}
+
+/* ==========================================================================
+   ПРОГРЕСС-БАРЫ (DARK & LIGHT СТИЛИ + АНИМАЦИЯ)
+   ========================================================================== */
+
+/* Трек шкалы (Dark Mode) */
+.progress-track {
+    background: rgba(5, 14, 10, 0.75);
+    border: 1px solid rgba(52, 211, 153, 0.15);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 9999px;
+    height: 7px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Заполнение полосы (Dark Mode) */
+.progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #059669 0%, #10b981 50%, #34d399 100%);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.45);
+    transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Вспышка-блик при увеличении прогресса */
+.progress-fill.updated {
+    animation: progressFlashDark 0.9s ease-out;
+}
+
+@keyframes progressFlashDark {
+    0% { filter: brightness(1); }
+    35% { filter: brightness(1.75); box-shadow: 0 0 16px rgba(52, 211, 153, 0.9); }
+    100% { filter: brightness(1); }
+}
+
+/* Трек шкалы (Light Mode — стиль Сбербанка) */
+html.light .progress-track {
+    background: #e3eae5;
+    border: 1px solid rgba(33, 160, 56, 0.2);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Заполнение полосы (Light Mode) */
+html.light .progress-fill {
+    background: linear-gradient(90deg, #1fa843 0%, #28c853 100%);
+    box-shadow: 0 2px 8px rgba(40, 200, 83, 0.35);
+}
+
+html.light .progress-fill.updated {
+    animation: progressFlashLight 0.9s ease-out;
+}
+
+@keyframes progressFlashLight {
+    0% { filter: brightness(1); }
+    35% { filter: brightness(1.35); box-shadow: 0 0 14px rgba(40, 200, 83, 0.8); }
+    100% { filter: brightness(1); }
+}
+
+
+/* ==========================================================================
+   АДАПТАЦИЯ МОДАЛЬНОГО ОКНА И АВТОРИЗАЦИИ ДЛЯ СВЕТЛОЙ ТЕМЫ
+   ========================================================================== */
+
+/* Подложка вкладок «Вход / Регистрация» */
+.auth-tabs-nav {
+    display: flex;
+    border-radius: 0.75rem;
+    background: rgba(15, 23, 42, 0.65);
+    padding: 0.25rem;
+    border: 1px solid var(--glass-border);
+}
+
+html.light .auth-tabs-nav {
+    background: #e8eee9;
+    border-color: rgba(33, 160, 56, 0.18);
+}
+
+/* Кнопки вкладок */
+.auth-tab {
+    flex: 1;
+    padding: 0.5rem 0;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    color: var(--text-muted);
+}
+
+.auth-tab.active {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+html.light .auth-tab.active {
+    background: #ffffff;
+    color: #1fa843;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Ошибки аутентификации */
+.auth-error-box {
+    font-size: 0.75rem;
+    padding: 0.65rem;
+    border-radius: 0.75rem;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #f87171;
+}
+
+html.light .auth-error-box {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
+}
+
+/* Выпадающие списки (select option) */
+.glass-input option {
+    background-color: #0b1511;
+    color: #f1f5f9;
+}
+
+html.light .glass-input option {
+    background-color: #ffffff;
+    color: #0f172a;
+}
+
+/* Кнопка сброса (Danger) в светлой теме */
+html.light .glass-button-danger {
+    background: #fee2e2;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+}
+
+html.light .glass-button-danger:hover {
+    background: #fca5a5;
+    color: #991b1b;
+}
+
+/* Плейсхолдеры в светлой теме */
+html.light .glass-input::placeholder {
+    color: #94a3b8;
+}
+
+/* Кнопки переключения режима аутентификации */
+.auth-btn {
+    cursor: pointer;
+    background: var(--glass-card-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-btn:hover:not(.active) {
+    border-color: rgba(52, 211, 153, 0.45);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.auth-btn:active {
+    transform: scale(0.96);
+}
+
+/* Активная кнопка (Dark Mode) */
+.auth-btn.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: rgba(110, 231, 183, 0.45);
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+/* Стили кнопок для светлой темы */
+html.light .auth-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(33, 160, 56, 0.2);
+    color: #64748b;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+html.light .auth-btn:hover:not(.active) {
+    border-color: rgba(40, 200, 83, 0.5);
+    color: #0f172a;
+}
+
+/* Активная кнопка (Light Mode) */
+html.light .auth-btn.active {
+    background: linear-gradient(135deg, #28c853 0%, #1fa843 100%);
+    border-color: rgba(33, 160, 56, 0.35);
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(40, 200, 83, 0.32);
+}
+
+/* ==========================================================================
+   КНОПКИ РЕЖИМА АУТЕНТИФИКАЦИИ (ВХОД / РЕГИСТРАЦИЯ)
+   ========================================================================== */
+
+.auth-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Неактивное состояние (Dark Mode) */
+    background: var(--glass-card-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.auth-btn:hover:not(.active) {
+    border-color: rgba(52, 211, 153, 0.4);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.auth-btn:active {
+    transform: scale(0.97);
+}
+
+/* Активное состояние (Dark Mode) — стиль glass-button-primary */
+.auth-btn.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: 1px solid rgba(110, 231, 183, 0.4);
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+}
+
+/* Неактивное состояние (Light Mode) */
+html.light .auth-btn {
+    background: #ffffff;
+    border: 1px solid rgba(33, 160, 56, 0.25);
+    color: #64748b;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+html.light .auth-btn:hover:not(.active) {
+    background: #f8faf9;
+    border-color: rgba(40, 200, 83, 0.5);
+    color: #0f172a;
+}
+
+/* Активное состояние (Light Mode) — идентично кнопке "Войти" */
+html.light .auth-btn.active {
+    background: linear-gradient(135deg, #28c853 0%, #1fa843 100%);
+    border: 1px solid rgba(33, 160, 56, 0.3);
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(40, 200, 83, 0.3);
+}
+
+.auth-btn svg {
+    stroke: currentColor;
+    flex-shrink: 0;
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сократический Тьютор по OKR</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            900: '#064e3b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Liquid Glass CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Client JS App -->
+    <script src="/static/js/app.js" defer></script>
+</head>
+
+<body class="bg-liquid-theme text-theme font-sans h-screen flex overflow-hidden relative transition-colors duration-300">
+
+    <!-- ФОНОВЫЕ ПЛАВНЫЕ ГРАДИЕНТЫ И АНИМИРОВАННЫЕ ЖИДКИЕ СФЕРЫ -->
+    <div class="ambient-background">
+        <div class="liquid-blob blob-1"></div>
+        <div class="liquid-blob blob-2"></div>
+        <div class="liquid-blob blob-3"></div>
+        <div class="liquid-lines-wave"></div>
+    </div>
+
+    <!-- КНОПКА ВЫЗОВА ПАНЕЛИ УПРАВЛЕНИЯ (СЛЕВА СВЕРХУ) -->
+    <button id="sidebar-toggle" class="fixed top-5 left-5 z-30 glass-button p-2.5 rounded-xl flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" title="Панель управления">
+        <i data-lucide="sliders" class="w-4 h-4 text-emerald-400"></i>
+    </button>
+
+    <!-- КНОПКА ЛИЧНОГО КАБИНЕТА (СПРАВА СВЕРХУ) -->
+    <button id="profile-toggle" class="fixed top-5 right-5 z-30 glass-button p-2.5 rounded-xl flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" title="Личный кабинет и настройки">
+        <i data-lucide="user" class="w-4 h-4 text-emerald-400"></i>
+    </button>
+
+    <!-- КНОПКА СМЕНЫ ТЕМЫ (СПРАВА СНИЗУ) -->
+    <button id="theme-toggle" class="fixed bottom-5 right-5 z-30 glass-button p-2.5 rounded-xl flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" title="Переключить тему">
+        <i data-lucide="sun" id="theme-icon-sun" class="w-4 h-4 text-amber-400 hidden"></i>
+        <i data-lucide="moon" id="theme-icon-moon" class="w-4 h-4 text-emerald-400"></i>
+    </button>
+
+    <!-- ОСНОВНОЙ GRID-КОНТЕЙНЕР -->
+    <div id="main-container" class="grid h-full w-full z-10 p-3 sm:p-4 pr-16 sm:pr-20 justify-center items-center">
+
+        <!-- ВЫДВИЖНАЯ ПАНЕЛЬ С ПРОГРЕССОМ И ТЕЛЕМЕТРИЕЙ -->
+        <aside id="sidebar" class="glass-panel h-full min-w-0">
+            <div class="w-[320px] h-full flex flex-col p-5 space-y-6 shrink-0">
+                
+                <!-- Хедер панели -->
+                <div class="flex items-center justify-between border-b border-theme pb-3.5 shrink-0">
+                    <div class="flex items-center space-x-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
+                        <i data-lucide="sliders" class="w-4 h-4"></i>
+                        <span>Панель управления</span>
+                    </div>
+                    <button id="sidebar-close" class="glass-button p-2 rounded-xl text-muted hover:text-theme transition" title="Свернуть">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Прогресс освоения -->
+                <div class="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1">
+                    <label class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Освоение OKR</label>
+                    <div id="progress-container" class="space-y-3">
+                        <p class="text-xs text-muted animate-pulse">Загрузка прогресса...</p>
+                    </div>
+                </div>
+
+                <!-- Телеметрия -->
+                <div class="glass-card p-3.5 space-y-2 shrink-0">
+                    <div class="flex items-center space-x-2 text-emerald-400">
+                        <i data-lucide="cpu" class="w-4 h-4 animate-pulse"></i>
+                        <span class="text-xs font-bold uppercase tracking-wider">Анализ последнего хода</span>
+                    </div>
+                    <div id="telemetry-box" class="text-xs space-y-1 text-muted">
+                        <p class="italic">Ожидание ввода...</p>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- ОБЛАСТЬ ЧАТА -->
+        <main class="w-full max-w-4xl h-full glass-panel flex flex-col justify-between overflow-hidden relative shadow-2xl transition-all duration-500 min-w-0 mx-auto">
+            
+            <!-- Хедер чата -->
+            <header class="h-16 border-b border-theme pl-14 sm:pl-16 pr-4 sm:pr-6 flex items-center justify-between glass-header shrink-0">
+                <div>
+                    <h2 class="font-semibold text-sm sm:text-base flex items-center gap-2">
+                        <span>Сократический Наставник по OKR</span>
+                    </h2>
+                    <p class="text-xs text-muted hidden md:block">Обучение через осознание и наводящие вопросы</p>
+                </div>
+
+                <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-400/30 text-emerald-400 text-xs rounded-full flex items-center space-x-2 shadow-sm">
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-ping"></span>
+                    <span class="font-medium hidden lg:inline">Guardrails Active</span>
+                </span>
+            </header>
+
+            <!-- Чат сообщений -->
+            <div id="chat-box" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 custom-scrollbar">
+                <div class="flex items-start space-x-3 max-w-3xl message-appear">
+                    <div class="p-2.5 bot-avatar-bg rounded-xl shrink-0">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl rounded-tl-none text-sm leading-relaxed">
+                        Привет! Я твой сократический наставник по методологии OKR. Как ты своими словами понимаешь, в чем ключевое отличие OKR от обычных целеполаганий или KPI?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Форма ввода -->
+            <div class="p-3 sm:p-4 border-t border-theme glass-footer shrink-0">
+                <form id="chat-form" class="max-w-4xl mx-auto flex space-x-2 sm:space-x-3" autocomplete="off">
+                    <input id="user-input" type="text" placeholder="Напишите ваш ответ или вопрос по OKR..." required
+                           autocomplete="off" autocorrect="off" spellcheck="false"
+                           class="glass-input flex-1 px-4 sm:px-5 py-3.5 text-sm focus:outline-none">
+                    
+                    <button type="submit" id="send-btn" class="glass-button-primary px-5 sm:px-6 py-3.5 rounded-xl font-medium transition flex items-center justify-center space-x-2 text-sm shrink-0 min-w-[120px]">
+                        <span id="send-btn-content" class="flex items-center space-x-2">
+                            <span>Отправить</span>
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </span>
+                        <span id="send-btn-loader" class="hidden flex items-center space-x-1.5 py-0.5">
+                            <span class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                            <span class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                            <span class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ЛИЧНОГО КАБИНЕТА И НАСТРОЕК -->
+    <div id="profile-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 backdrop-blur-md bg-slate-950/40">
+        <div id="profile-modal-card" class="glass-panel w-full max-w-md p-6 space-y-5 shadow-2xl transform scale-95 transition-all duration-300 border border-theme relative">
+            
+            <!-- Хедер профиля -->
+            <div class="flex items-center justify-between border-b border-theme pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-3 bot-avatar-bg rounded-xl shadow-md shrink-0">
+                        <i data-lucide="user-check" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 id="modal-title" class="font-bold text-base text-theme">Личный кабинет</h3>
+                        <p id="modal-subtitle" class="text-xs text-muted">Настройки тьютора и сессии</p>
+                    </div>
+                </div>
+                <button id="profile-close" class="glass-button p-2 rounded-xl text-muted hover:text-theme transition" title="Закрыть">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- ОБЩИЙ БЛОК НАСТРОЕК: ДОСТУПЕН ГОСТЮ И АВТОРИЗОВАННОМУ ПОЛЬЗОВАТЕЛЮ -->
+            <div class="space-y-3 pb-4 border-b border-theme">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs text-muted font-medium">LLM Провайдер:</label>
+                        <span id="user-status-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Гостевой режим</span>
+                    </div>
+                    <select id="model-provider" class="glass-input w-full mt-1.5 px-3.5 py-2.5 text-sm focus:outline-none">
+                        <option value="ollama">Ollama (Local llama3.1)</option>
+                        <option value="gigachat">GigaChat API</option>
+                    </select>
+                </div>
+
+                <button id="btn-new-session" class="glass-button-primary w-full py-2.5 text-xs font-semibold rounded-xl flex items-center justify-center space-x-2 transition">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    <span>Начать новую сессию</span>
+                </button>
+            </div>
+
+            <!-- 1. СЕКЦИЯ АУТЕНТИФИКАЦИИ (ГОСТЬ) -->
+            <div id="auth-section" class="space-y-4">
+                <div class="text-[11px] text-muted">
+                    Войдите или зарегистрируйтесь, чтобы сохранять прогресс между устройствами:
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="tab-login" type="button" class="auth-btn active">
+                        <i data-lucide="log-in" class="w-4 h-4"></i>
+                        <span>Вход</span>
+                    </button>
+                    <button id="tab-register" type="button" class="auth-btn">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        <span>Регистрация</span>
+                    </button>
+                </div>
+
+                <div id="auth-error" class="hidden auth-error-box"></div>
+
+                <form id="auth-form" class="space-y-3">
+                    <div>
+                        <label class="text-xs text-muted font-medium">Email:</label>
+                        <input id="auth-email" type="email" placeholder="name@company.ru" required
+                            class="glass-input w-full mt-1 px-3.5 py-2.5 text-sm focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-xs text-muted font-medium">Пароль:</label>
+                        <input id="auth-password" type="password" placeholder="••••••••" required minlength="6"
+                            class="glass-input w-full mt-1 px-3.5 py-2.5 text-sm focus:outline-none">
+                    </div>
+                    <button type="submit" id="auth-submit-btn" class="glass-button-primary w-full py-3 text-xs font-semibold rounded-xl transition">
+                        Войти
+                    </button>
+                </form>
+            </div>
+
+            <!-- 2. СЕКЦИЯ ПРОФИЛЯ (АВТОРИЗОВАННЫЙ ПОЛЬЗОВАТЕЛЬ) -->
+            <div id="user-section" class="space-y-4 hidden">
+                <div>
+                    <label class="text-xs text-muted font-medium">Текущий аккаунт:</label>
+                    <div id="user-email-display" class="font-mono text-sm text-emerald-400 font-semibold mt-1">user@mail.com</div>
+                </div>
+
+                <div class="pt-2 flex flex-col gap-2.5">
+                    <button id="btn-reset-progress" class="glass-button-danger w-full py-2.5 text-xs font-medium rounded-xl transition flex items-center justify-center space-x-2">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        <span>Сбросить прогресс OKR</span>
+                    </button>
+                    <button id="btn-logout" class="glass-button w-full py-2.5 text-xs font-medium rounded-xl text-muted hover:text-red-400 transition flex items-center justify-center space-x-2 border border-theme">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                        <span>Выйти из аккаунта</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
