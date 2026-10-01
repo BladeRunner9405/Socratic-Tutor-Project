@@ -20,7 +20,7 @@ if (!sessionId) {
 }
 
 let currentUser = null;
-let currentAuthMode = "Привет! Я твой сократический наставник по методологии OKR. Привет! Я твой сократический наставник по методологии OKR. Ты знаешь что такое OKR?";
+let currentAuthMode = "Привет! Я твой сократический наставник по методологии OKR. Ты знаешь что такое OKR?";
 
 const TOPIC_TITLES = {
     'okr_basics': 'Сущность OKR и история',
